@@ -36,11 +36,10 @@ type Blob = {
 
 export const App: FunctionalComponent = () => {
 
-  // a nice hook handles all the metaframe machinery
+  // the hook handles all the encoding/decoding/listening
   const [jsonBlob, setJsonBlob] = useHashParamJson<Blob>("key", defaultValue);
 
   // respond to new inputs
-  // let the metapage know we are going to modify our own hash params from user interaction
   useEffect(() => {
     console.log(`I got a new jsonBlob ${JSON.stringify(jsonBlob)}`);
   }, [jsonBlob]);
