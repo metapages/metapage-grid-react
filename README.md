@@ -6,7 +6,7 @@ Useful hooks and tools for getting/setting:
   - into the URL hash parameters
 
 
-The hash part of the URL is split into the <hashvalue> part and the `key=val` query parts of the hash parameter:
+The hash part of the URL is split into the `<hash value>` part and the `key=val` query parts of the hash parameter:
 
 ```
 https://<origin><path><?querystring>#<hash value>?hashkey1=hashvaue1&hashkey2=hashvaue2...
