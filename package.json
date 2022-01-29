@@ -1,11 +1,17 @@
 {
   "name": "@metapages/hash-query",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/metapages/hash-query"
   },
-  "keywords": ["hash", "query", "url", "url-query", "hooks"],
+  "keywords": [
+    "hash",
+    "query",
+    "url",
+    "url-query",
+    "hooks"
+  ],
   "files": [
     "dist/**/*",
     "src/lib/**/*"
