@@ -6,7 +6,7 @@ Useful hooks and tools for getting/setting:
   - into the URL hash parameters
 
 
-The hash part of the URL is split into the `<hash value>` part and the `key=val` query parts of the hash parameter:
+The hash part of the URL (everything after `#`) is split into the `<hash value>` part and the `key=val` query parts of the hash parameter:
 
 ```
 https://<origin><path><?querystring>#<hash value>?hashkey1=hashvaue1&hashkey2=hashvaue2...
@@ -37,7 +37,8 @@ type Blob = {
 export const App: FunctionalComponent = () => {
 
   // the hook handles all the encoding/decoding/listening
-  const [jsonBlob, setJsonBlob] = useHashParamJson<Blob>("key", defaultValue);
+  const [jsonBlob, setJsonBlob] =
+    useHashParamJson<Blob>("key", defaultValue);
 
   // respond to new inputs
   useEffect(() => {
