@@ -3,6 +3,7 @@
 ###############################################################
 # just docs: https://github.com/casey/just
 set shell                          := ["bash", "-c"]
+set dotenv-load                    := true
 # Change this to anything else to NOT publish a seperate npm module
 NPM_PUBLISH                        := "true"
 # E.g. 'my.app.com'. Some services e.g. auth need know the external endpoint for example OAuth
