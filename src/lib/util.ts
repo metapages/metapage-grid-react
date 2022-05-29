@@ -48,7 +48,7 @@ export const getUrlHashParamsFromHashString = (
   }
 
   const queryIndex = hashString.indexOf("?");
-  console.log(`getUrlHashParamsFromHashString queryIndex=${queryIndex} hash=${hash} hash=${hashString}`)
+  // console.log(`getUrlHashParamsFromHashString queryIndex=${queryIndex} hash=${hash} hash=${hashString}`)
   if (queryIndex === -1) {
     return [hashString, {}];
   }
@@ -73,7 +73,7 @@ export const getUrlHashParamsFromHashString = (
   Object.keys(hashObject).forEach(
     (key) => (hashObject[key] = decodeURI(hashObject[key]))
   );
-  console.log([preHashString, hashObject])
+  // console.log([preHashString, hashObject])
   return [preHashString, hashObject];
 };
 
@@ -104,8 +104,8 @@ export const setHashParamInWindow = (
 ) => {
   const hash = window.location.hash;
   const newHash = setHashValueInHashString(hash, key, value);
-  console.log('newHash', newHash);
-  console.log(`setHashParamInWindow key=${key} value=${value} hash=${hash} newHash=${newHash}`);
+  // console.log('newHash', newHash);
+  // console.log(`setHashParamInWindow key=${key} value=${value} hash=${hash} newHash=${newHash}`);
   if (newHash === hash) {
     return;
   }
@@ -143,7 +143,7 @@ export const setHashValueInHashString = (
   key: string,
   value: string | undefined
 ) => {
-  console.log(`setHashValueInHashString 1 preHashParamString=${hash} key=${key} value=${value}`);
+  // console.log(`setHashValueInHashString 1 preHashParamString=${hash} key=${key} value=${value}`);
   const [preHashParamString, hashObject] = getUrlHashParamsFromHashString(hash);
 
   let changed = false;
@@ -165,7 +165,7 @@ export const setHashValueInHashString = (
     return hash;
   }
 
-  console.log(`setHashValueInHashString 3 preHashParamString=${preHashParamString} hashObject=${JSON.stringify(hashObject)}  `);
+  // console.log(`setHashValueInHashString 3 preHashParamString=${preHashParamString} hashObject=${JSON.stringify(hashObject)}  `);
 
   const keys = Object.keys(hashObject);
   keys.sort();
@@ -196,7 +196,7 @@ export const setHashValueInUrl = (
   const urlBlob = new URL(url);
   const newHash = setHashValueInHashString(urlBlob.hash, key, value);
   urlBlob.hash = newHash;
-  console.log('urlBlob.hash', urlBlob.hash);
+  // console.log('urlBlob.hash', urlBlob.hash);
   return urlBlob.href;
 };
 
