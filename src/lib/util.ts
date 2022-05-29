@@ -47,6 +47,7 @@ export const getUrlHashParamsFromHashString = (
     hashString = hashString.substring(1);
   }
   const queryIndex = hashString.indexOf("?");
+  console.log(`getUrlHashParamsFromHashString queryIndex=${queryIndex} hash=${hash} hash=${hashString}`)
   if (queryIndex === -1) {
     return [hashString, {}];
   }
@@ -132,6 +133,7 @@ export const setHashValueInHashString = (
   key: string,
   value: string | undefined
 ) => {
+  console.log(`setHashValueInHashString 1 preHashParamString=${hash} key=${key} value=${value}`);
   const [preHashParamString, hashObject] = getUrlHashParamsFromHashString(hash);
 
   let changed = false;
@@ -153,7 +155,7 @@ export const setHashValueInHashString = (
     return hash;
   }
 
-  console.log(`setHashValueInHashString preHashParamString=${preHashParamString} hashObject=${JSON.stringify(hashObject)}  `);
+  console.log(`setHashValueInHashString 3 preHashParamString=${preHashParamString} hashObject=${JSON.stringify(hashObject)}  `);
 
   const keys = Object.keys(hashObject);
   keys.sort();
