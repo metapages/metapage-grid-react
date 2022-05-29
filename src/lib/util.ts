@@ -42,13 +42,17 @@ export const getUrlHashParams = (
 export const getUrlHashParamsFromHashString = (
   hash: string
 ): [string, Record<string, string>] => {
-  let hashString = hash.startsWith("#") ? hash.substring(1) : hash;
+  let hashString = hash;
+  while (hashString.startsWith("#")) {
+    hashString = hashString.substring(1);
+  }
   const queryIndex = hashString.indexOf("?");
   if (queryIndex === -1) {
     return [hashString, {}];
   }
   const preHashString = hashString.substring(0, queryIndex);
   hashString = hashString.substring(queryIndex + 1);
+  // hashString = hashString.replace("#?")
   // @ts-ignore
   const hashObject = Object.fromEntries(
     hashString
@@ -59,6 +63,7 @@ export const getUrlHashParamsFromHashString = (
   Object.keys(hashObject).forEach(
     (key) => (hashObject[key] = decodeURI(hashObject[key]))
   );
+  console.log([preHashString, hashObject])
   return [preHashString, hashObject];
 };
 
@@ -89,6 +94,7 @@ export const setHashParamInWindow = (
 ) => {
   const hash = window.location.hash;
   const newHash = setHashValueInHashString(hash, key, value);
+  console.log('newHash', newHash);
   if (newHash === hash) {
     return;
   }
@@ -147,6 +153,8 @@ export const setHashValueInHashString = (
     return hash;
   }
 
+  console.log(`setHashValueInHashString preHashParamString=${preHashParamString} hashObject=${JSON.stringify(hashObject)}  `);
+
   const keys = Object.keys(hashObject);
   keys.sort();
   const hashStringNew = keys
@@ -174,7 +182,9 @@ export const setHashValueInUrl = (
   value: string | undefined
 ) => {
   const urlBlob = new URL(url);
-  urlBlob.hash = setHashValueInHashString(urlBlob.hash, key, value);
+  const newHash = setHashValueInHashString(urlBlob.hash, key, value);
+  urlBlob.hash = newHash;
+  console.log('urlBlob.hash', urlBlob.hash);
   return urlBlob.href;
 };
 
