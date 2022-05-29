@@ -46,6 +46,7 @@ export const getUrlHashParamsFromHashString = (
   while (hashString.startsWith("#")) {
     hashString = hashString.substring(1);
   }
+
   const queryIndex = hashString.indexOf("?");
   console.log(`getUrlHashParamsFromHashString queryIndex=${queryIndex} hash=${hash} hash=${hashString}`)
   if (queryIndex === -1) {
@@ -59,7 +60,15 @@ export const getUrlHashParamsFromHashString = (
     hashString
       .split("&")
       .filter((s) => s.length > 0)
-      .map((s) => s.split("="))
+      .map((s) => {
+        const dividerIndex = s.indexOf("=");
+        if (dividerIndex === -1) {
+          return [s, ""];
+        }
+        const key = s.substring(0, dividerIndex);
+        const value = s.substring(dividerIndex + 1);
+        return [key, value];
+      })
   );
   Object.keys(hashObject).forEach(
     (key) => (hashObject[key] = decodeURI(hashObject[key]))
@@ -96,6 +105,7 @@ export const setHashParamInWindow = (
   const hash = window.location.hash;
   const newHash = setHashValueInHashString(hash, key, value);
   console.log('newHash', newHash);
+  console.log(`setHashParamInWindow key=${key} value=${value} hash=${hash} newHash=${newHash}`);
   if (newHash === hash) {
     return;
   }
