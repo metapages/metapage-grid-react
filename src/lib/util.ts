@@ -56,20 +56,23 @@ export const getUrlHashParamsFromHashString = (
   }
   const preHashString = hashString.substring(0, queryIndex);
   hashString = hashString.substring(queryIndex + 1);
-  const hashObject = Object.fromEntries(
-    hashString
-      .split("&")
-      .filter((s) => s.length > 0)
-      .map((s) => {
-        const dividerIndex = s.indexOf("=");
-        if (dividerIndex === -1) {
-          return [s, ""];
-        }
-        const key = s.substring(0, dividerIndex);
-        const value = s.substring(dividerIndex + 1);
-        return [key, value];
-      })
-  );
+  const hashObject: Record<string, string> = {};
+  hashString
+    .split("&")
+    .filter((s) => s.length > 0)
+    .map((s) => {
+      const dividerIndex = s.indexOf("=");
+      if (dividerIndex === -1) {
+        return [s, ""];
+      }
+      const key = s.substring(0, dividerIndex);
+      const value = s.substring(dividerIndex + 1);
+      return [key, value];
+    })
+    .forEach(([key, value]) => {
+      hashObject[key] = value;
+    });
+
   Object.keys(hashObject).forEach(
     (key) => (hashObject[key] = decodeURI(hashObject[key]))
   );
