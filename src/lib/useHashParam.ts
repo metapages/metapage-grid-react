@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { getHashParamsInWindow, setHashParamInWindow, SetHashParamOpts } from "./util";
+import {
+  getHashParamsInWindow,
+  setHashParamInWindow,
+  SetHashParamOpts,
+} from "./util";
 
 /**
  * Hook for getting/setting hash params
@@ -16,7 +20,7 @@ export const useHashParam = (
   );
 
   useEffect(() => {
-    const onHashChange = (_: Event) => {
+    const onHashChange = (_: HashChangeEvent) => {
       const paramHash = getHashParamsInWindow()[1];
       setHashParamInternal(paramHash[key]);
     };

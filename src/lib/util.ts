@@ -1,3 +1,8 @@
+/**
+ * Core logic for getting/setting hash params
+ * Important note: the internal hash string does NOT have the leading #
+ */
+
 import stringify from "fast-json-stable-stringify";
 
 export type SetHashParamOpts = {
@@ -17,9 +22,7 @@ export const blobToBase64String = (blob: Record<string, any>) => {
   return btoa(stringify(blob));
 };
 
-export const blobFromBase64String = (
-  value: string | undefined
-) => {
+export const blobFromBase64String = (value: string | undefined) => {
   if (value && value.length > 0) {
     const blob = JSON.parse(atob(value));
     return blob;
@@ -48,14 +51,11 @@ export const getUrlHashParamsFromHashString = (
   }
 
   const queryIndex = hashString.indexOf("?");
-  // console.log(`getUrlHashParamsFromHashString queryIndex=${queryIndex} hash=${hash} hash=${hashString}`)
   if (queryIndex === -1) {
     return [hashString, {}];
   }
   const preHashString = hashString.substring(0, queryIndex);
   hashString = hashString.substring(queryIndex + 1);
-  // hashString = hashString.replace("#?")
-  // @ts-ignore
   const hashObject = Object.fromEntries(
     hashString
       .split("&")
@@ -73,7 +73,6 @@ export const getUrlHashParamsFromHashString = (
   Object.keys(hashObject).forEach(
     (key) => (hashObject[key] = decodeURI(hashObject[key]))
   );
-  // console.log([preHashString, hashObject])
   return [preHashString, hashObject];
 };
 
@@ -102,10 +101,10 @@ export const setHashParamInWindow = (
   value: string | undefined,
   opts?: SetHashParamOpts
 ) => {
-  const hash = window.location.hash;
+  const hash = window.location.hash.startsWith("#")
+    ? window.location.hash.substring(1)
+    : window.location.hash;
   const newHash = setHashValueInHashString(hash, key, value);
-  // console.log('newHash', newHash);
-  // console.log(`setHashParamInWindow key=${key} value=${value} hash=${hash} newHash=${newHash}`);
   if (newHash === hash) {
     return;
   }
@@ -120,7 +119,9 @@ export const setHashParamInWindow = (
     window.history.replaceState(
       null,
       document.title,
-      `${window.location.pathname}${window.location.search}${newHash.startsWith("#") ? "" : "#"}${newHash}`
+      `${window.location.pathname}${window.location.search}${
+        newHash.startsWith("#") ? "" : "#"
+      }${newHash}`
     );
     // Manually trigger a hashchange event:
     // I don't know how to add the previous and new url parameters
@@ -143,7 +144,6 @@ export const setHashValueInHashString = (
   key: string,
   value: string | undefined
 ) => {
-  // console.log(`setHashValueInHashString 1 preHashParamString=${hash} key=${key} value=${value}`);
   const [preHashParamString, hashObject] = getUrlHashParamsFromHashString(hash);
 
   let changed = false;
@@ -164,8 +164,6 @@ export const setHashValueInHashString = (
   if (!changed) {
     return hash;
   }
-
-  // console.log(`setHashValueInHashString 3 preHashParamString=${preHashParamString} hashObject=${JSON.stringify(hashObject)}  `);
 
   const keys = Object.keys(hashObject);
   keys.sort();
@@ -196,7 +194,6 @@ export const setHashValueInUrl = (
   const urlBlob = new URL(url);
   const newHash = setHashValueInHashString(urlBlob.hash, key, value);
   urlBlob.hash = newHash;
-  // console.log('urlBlob.hash', urlBlob.hash);
   return urlBlob.href;
 };
 
