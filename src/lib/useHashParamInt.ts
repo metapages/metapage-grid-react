@@ -14,7 +14,9 @@ export const useHashParamInt = (
 ] => {
   const [hashParamString, setHashParamString] = useHashParam(
     key,
-    defaultValue ? defaultValue.toString() : undefined
+    defaultValue !== undefined && defaultValue !== null
+      ? defaultValue.toString()
+      : undefined
   );
   const [hashInt, setHashInt] = useState<number | undefined>(
     hashParamString ? parseInt(hashParamString) : undefined

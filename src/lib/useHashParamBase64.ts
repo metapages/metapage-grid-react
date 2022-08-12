@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useHashParam } from "./useHashParam";
-import { SetHashParamOpts } from "./util";
+import {
+  getHashParamFromWindow,
+  getHashParamValueDecodedBase64FromWindow,
+  SetHashParamOpts,
+} from "./util";
 
 /**
  * Hook for getting/setting hash param string value, but base64 encoded
@@ -15,10 +19,13 @@ export const useHashParamBase64 = (
 ] => {
   const [hashParamString, setHashParamString] = useHashParam(
     key,
-    defaultValue ? stringToBase64String(defaultValue) : undefined
+    defaultValue !== undefined && defaultValue !== null
+      ? stringToBase64String(defaultValue)
+      : getHashParamFromWindow(key)
   );
-  const [decodedString, setDecodedString] =
-    useState<string | undefined>(defaultValue);
+  const [decodedString, setDecodedString] = useState<string | undefined>(
+    defaultValue
+  );
 
   // if the hash string value changes
   useEffect(() => {

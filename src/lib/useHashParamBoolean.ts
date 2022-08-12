@@ -14,7 +14,9 @@ export const useHashParamBoolean = (
 ] => {
   const [hashParamString, setHashParamString] = useHashParam(
     key,
-    defaultValue ? `${defaultValue}` : undefined
+    defaultValue !== undefined && defaultValue !== null
+      ? `${defaultValue}`
+      : undefined
   );
   const [hashBoolean, setHashBoolean] = useState<boolean>(
     hashParamString === "true" ? true : false

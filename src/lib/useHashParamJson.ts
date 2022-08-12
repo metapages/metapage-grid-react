@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useHashParam } from "./useHashParam";
-import { blobFromBase64String, blobToBase64String, SetHashParamOpts } from "./util";
+import {
+  blobFromBase64String,
+  blobToBase64String,
+  SetHashParamOpts,
+} from "./util";
 
 /**
  * Hook for getting/setting a hash param JSON blob (safely encoded)
@@ -11,7 +15,9 @@ export const useHashParamJson = <T>(
 ): [T | undefined, (v?: T | undefined, opts?: SetHashParamOpts) => void] => {
   const [hashParamString, setHashParamString] = useHashParam(
     key,
-    defaultBlob ? blobToBase64String(defaultBlob) : undefined
+    defaultBlob !== undefined && defaultBlob !== null
+      ? blobToBase64String(defaultBlob)
+      : undefined
   );
   const [hashBlob, setHashBlob] = useState<T>(
     blobFromBase64String(hashParamString)

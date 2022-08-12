@@ -14,7 +14,9 @@ export const useHashParamFloat = (
 ] => {
   const [hashParamString, setHashParamString] = useHashParam(
     key,
-    defaultValue ? defaultValue.toString() : undefined
+    defaultValue !== undefined && defaultValue !== null
+      ? defaultValue.toString()
+      : undefined
   );
   const [hashNumber, setHashNumber] = useState<number | undefined>(
     hashParamString ? parseFloat(hashParamString) : undefined

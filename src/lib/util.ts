@@ -30,10 +30,6 @@ export const blobFromBase64String = (value: string | undefined) => {
   return undefined;
 };
 
-export const getHashParamsInWindow = (): [string, Record<string, string>] => {
-  return getUrlHashParams(window.location.href);
-};
-
 // Get everything after # then after ?
 export const getUrlHashParams = (
   url: string
@@ -87,13 +83,45 @@ export const getHashParamValue = (
   return hashParams[key];
 };
 
-export const getHashParamValueJson = (
+export const getHashParamValueJson = <T>(
   url: string,
   key: string
-): any | undefined => {
+): T | undefined => {
   const valueString = getHashParamValue(url, key);
   if (valueString && valueString !== "") {
     const value = blobFromBase64String(valueString);
+    return value;
+  }
+  return;
+};
+
+export const getHashParamFromWindow = (key: string): string | undefined => {
+  return getHashParamsFromWindow()[1][key];
+};
+
+export const getHashParamsFromWindow = (): [string, Record<string, string>] => {
+  return getUrlHashParams(window.location.href);
+};
+
+export const getHashParamValueDecodedBase64FromWindow = (
+  key: string
+): string | undefined => {
+  return getHashParamValueDecodedBase64(window.location.href, key);
+};
+
+export const getHashParamValueJsonFromWindow = <T>(
+  key: string
+): T | undefined => {
+  return getHashParamValueJson(window.location.href, key);
+};
+
+export const getHashParamValueDecodedBase64 = (
+  url: string,
+  key: string
+): string | undefined => {
+  const valueString = getHashParamValue(url, key);
+  if (valueString && valueString !== "") {
+    const value = atob(valueString);
     return value;
   }
   return;
@@ -132,9 +160,9 @@ export const setHashParamInWindow = (
   }
 };
 
-export const setHashParamJsonInWindow = (
+export const setHashParamJsonInWindow = <T>(
   key: string,
-  value: object | undefined,
+  value: T | undefined,
   opts?: SetHashParamOpts
 ) => {
   const valueString = value ? blobToBase64String(value) : undefined;
@@ -179,10 +207,10 @@ export const setHashValueInHashString = (
   return `${preHashParamString}?${hashStringNew}`;
 };
 
-export const setHashValueJsonInHashString = (
+export const setHashValueJsonInHashString = <T>(
   hash: string,
   key: string,
-  value: object | undefined
+  value: T | undefined
 ) => {
   const valueString = value ? blobToBase64String(value) : undefined;
   return setHashValueInHashString(hash, key, valueString);
@@ -201,10 +229,10 @@ export const setHashValueInUrl = (
 };
 
 // returns URL string
-export const setHashValueJsonInUrl = (
+export const setHashValueJsonInUrl = <T>(
   url: string,
   key: string,
-  value: object | undefined
+  value: T | undefined
 ) => {
   const urlBlob = new URL(url);
   urlBlob.hash = setHashValueJsonInHashString(urlBlob.hash, key, value);

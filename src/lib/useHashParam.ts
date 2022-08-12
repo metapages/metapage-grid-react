@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import {
-  getHashParamsInWindow,
+  getHashParamFromWindow,
+  getHashParamsFromWindow,
   setHashParamInWindow,
   SetHashParamOpts,
 } from "./util";
@@ -16,12 +17,12 @@ export const useHashParam = (
   (v: string | undefined, opts?: SetHashParamOpts) => void
 ] => {
   const [hashParam, setHashParamInternal] = useState<string | undefined>(
-    getHashParamsInWindow()[1][key] || defaultValue
+    defaultValue ?? getHashParamFromWindow(key)
   );
 
   useEffect(() => {
     const onHashChange = (_: HashChangeEvent) => {
-      const paramHash = getHashParamsInWindow()[1];
+      const paramHash = getHashParamsFromWindow()[1];
       setHashParamInternal(paramHash[key]);
     };
     window.addEventListener("hashchange", onHashChange);
