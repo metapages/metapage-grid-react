@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useHashParam } from "./useHashParam";
-import { SetHashParamOpts } from "./util";
+import { getHashParamFromWindow, SetHashParamOpts } from "./util";
 
 /**
  * Hook for getting/setting a hash param float (safely encoded)
@@ -16,6 +16,8 @@ export const useHashParamFloat = (
     key,
     defaultValue !== undefined && defaultValue !== null
       ? defaultValue.toString()
+      : getHashParamFromWindow(key)
+      ? getHashParamFromWindow(key)
       : undefined
   );
   const [hashNumber, setHashNumber] = useState<number | undefined>(
