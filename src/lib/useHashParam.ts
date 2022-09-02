@@ -17,7 +17,7 @@ export const useHashParam = (
   (v: string | undefined, opts?: SetHashParamOpts) => void
 ] => {
   const [hashParam, setHashParamInternal] = useState<string | undefined>(
-    defaultValue ?? getHashParamFromWindow(key)
+    getHashParamFromWindow(key) ?? defaultValue
   );
 
   useEffect(() => {

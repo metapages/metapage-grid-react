@@ -14,10 +14,10 @@ export const useHashParamInt = (
 ] => {
   const [hashParamString, setHashParamString] = useHashParam(
     key,
-    defaultValue !== undefined && defaultValue !== null
-      ? defaultValue.toString()
-      : getHashParamFromWindow(key)
+    getHashParamFromWindow(key)
       ? getHashParamFromWindow(key)
+      : defaultValue !== undefined && defaultValue !== null
+      ? defaultValue.toString()
       : undefined
   );
   const [hashInt, setHashInt] = useState<number | undefined>(

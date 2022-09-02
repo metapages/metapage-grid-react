@@ -14,10 +14,10 @@ export const useHashParamFloat = (
 ] => {
   const [hashParamString, setHashParamString] = useHashParam(
     key,
-    defaultValue !== undefined && defaultValue !== null
-      ? defaultValue.toString()
-      : getHashParamFromWindow(key)
+    getHashParamFromWindow(key)
       ? getHashParamFromWindow(key)
+      : defaultValue !== undefined && defaultValue !== null
+      ? defaultValue.toString()
       : undefined
   );
   const [hashNumber, setHashNumber] = useState<number | undefined>(

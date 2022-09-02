@@ -14,10 +14,10 @@ export const useHashParamBoolean = (
 ] => {
   const [hashParamString, setHashParamString] = useHashParam(
     key,
-    defaultValue !== undefined && defaultValue !== null
-      ? `${defaultValue}`
-      : getHashParamFromWindow(key)
+    getHashParamFromWindow(key)
       ? getHashParamFromWindow(key)
+      : defaultValue !== undefined && defaultValue !== null
+      ? `${defaultValue}`
       : undefined
   );
   const [hashBoolean, setHashBoolean] = useState<boolean>(
