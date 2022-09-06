@@ -16,9 +16,7 @@ export const useHashParamJson = <T>(
 ): [T | undefined, (v?: T | undefined, opts?: SetHashParamOpts) => void] => {
   const [hashParamString, setHashParamString] = useHashParam(
     key,
-    getHashParamFromWindow(key)
-      ? getHashParamFromWindow(key)
-      : defaultBlob !== undefined && defaultBlob !== null
+    defaultBlob !== undefined && defaultBlob !== null
       ? blobToBase64String(defaultBlob)
       : undefined
   );

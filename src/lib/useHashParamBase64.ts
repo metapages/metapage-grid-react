@@ -19,7 +19,9 @@ export const useHashParamBase64 = (
 ] => {
   const [hashParamString, setHashParamString] = useHashParam(
     key,
-    getHashParamFromWindow(key) ?? defaultValue
+    defaultValue !== undefined && defaultValue !== null
+      ? stringToBase64String(defaultValue)
+      : undefined
   );
   const [decodedString, setDecodedString] = useState<string | undefined>(
     defaultValue

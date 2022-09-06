@@ -14,9 +14,7 @@ export const useHashParamBoolean = (
 ] => {
   const [hashParamString, setHashParamString] = useHashParam(
     key,
-    getHashParamFromWindow(key)
-      ? getHashParamFromWindow(key)
-      : defaultValue !== undefined && defaultValue !== null
+    defaultValue !== undefined && defaultValue !== null
       ? `${defaultValue}`
       : undefined
   );
