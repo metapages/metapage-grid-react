@@ -22,7 +22,7 @@ export const useHashParam = (
 
   useEffect(() => {
     const [_, hashParams] = getHashParamsFromWindow();
-    if (defaultValue && !hashParams[key]) {
+    if (defaultValue && hashParams[key] === undefined) {
       setHashParamInWindow(key, defaultValue);
     }
   }, [defaultValue]);
