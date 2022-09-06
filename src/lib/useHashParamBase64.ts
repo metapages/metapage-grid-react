@@ -1,10 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useHashParam } from "./useHashParam";
-import {
-  getHashParamFromWindow,
-  getHashParamValueDecodedBase64FromWindow,
-  SetHashParamOpts,
-} from "./util";
+import { SetHashParamOpts } from "./util";
 
 /**
  * Hook for getting/setting hash param string value, but base64 encoded

@@ -21,6 +21,13 @@ export const useHashParam = (
   );
 
   useEffect(() => {
+    const [_, hashParams] = getHashParamsFromWindow();
+    if (defaultValue && !hashParams[key]) {
+      setHashParamInWindow(key, defaultValue);
+    }
+  }, [defaultValue]);
+
+  useEffect(() => {
     const onHashChange = (_: HashChangeEvent) => {
       const paramHash = getHashParamsFromWindow()[1];
       setHashParamInternal(paramHash[key]);

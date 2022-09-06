@@ -3,7 +3,6 @@ import { useHashParam } from "./useHashParam";
 import {
   blobFromBase64String,
   blobToBase64String,
-  getHashParamFromWindow,
   SetHashParamOpts,
 } from "./util";
 
@@ -20,6 +19,7 @@ export const useHashParamJson = <T>(
       ? blobToBase64String(defaultBlob)
       : undefined
   );
+
   const [hashBlob, setHashBlob] = useState<T>(
     blobFromBase64String(hashParamString)
   );
