@@ -10,7 +10,7 @@ export const useHashParamInt = (
   defaultValue?: number
 ): [
   number | undefined,
-  (v: number | undefined, opts?: SetHashParamOpts) => void
+  (v: number | undefined) => void
 ] => {
   const [hashParamString, setHashParamString] = useHashParam(
     key,

@@ -69,9 +69,13 @@ export const getUrlHashParamsFromHashString = (
       hashObject[key] = value;
     });
 
-  Object.keys(hashObject).forEach(
-    (key) => (hashObject[key] = decodeURI(hashObject[key]))
-  );
+  Object.keys(hashObject).forEach((key) => {
+    try {
+      hashObject[key] = decodeURI(hashObject[key]);
+    } catch (ignored) {
+      hashObject[key] = hashObject[key];
+    }
+  });
   return [preHashString, hashObject];
 };
 
