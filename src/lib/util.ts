@@ -3,7 +3,7 @@
  * Important note: the internal hash string does NOT have the leading #
  */
 
-import stringify from "fast-json-stable-stringify";
+import stringify from 'fast-json-stable-stringify';
 
 export type SetHashParamOpts = {
   modifyHistory?: boolean;
@@ -19,12 +19,12 @@ export const isIframe = (): boolean => {
 };
 
 export const blobToBase64String = (blob: Record<string, any>) => {
-  return btoa(stringify(blob));
+  return btoa(encodeURIComponent(stringify(blob)));
 };
 
 export const blobFromBase64String = (value: string | undefined) => {
   if (value && value.length > 0) {
-    const blob = JSON.parse(atob(value));
+    const blob = JSON.parse(decodeURIComponent(atob(value)));
     return blob;
   }
   return undefined;

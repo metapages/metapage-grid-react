@@ -1,6 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
-import { useHashParam } from "./useHashParam";
-import { SetHashParamOpts } from "./util";
+import {
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+
+import { useHashParam } from './useHashParam';
+import { SetHashParamOpts } from './util';
 
 /**
  * Hook for getting/setting hash param string value, but base64 encoded
@@ -44,12 +49,12 @@ export const useHashParamBase64 = (
 };
 
 export const stringToBase64String = (value: string) => {
-  return btoa(value);
+  return btoa(encodeURIComponent(value));
 };
 
 export const stringFromBase64String = (value: string | undefined) => {
   if (value && value.length > 0) {
-    return atob(value);
+    return decodeURIComponent(atob(value));
   }
   return undefined;
 };
