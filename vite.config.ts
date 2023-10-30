@@ -1,6 +1,6 @@
-import fs from "fs";
-import path from "path";
-import { defineConfig } from "vite";
+import fs from 'fs';
+import path from 'path';
+import { defineConfig } from 'vite';
 
 // Get the github pages path e.g. if served from https://<name>.github.io/<repo>/
 // then we need to pull out "<repo>"
@@ -19,7 +19,9 @@ export default defineConfig(({ command, mode }) => ({
     lib: {
       entry: path.resolve(__dirname, 'src/lib/index.ts'),
       name: packageName,
-      fileName: (format) => `index.${format}.js`
+      fileName: (format) => {
+        return `index.${format}.${format === "umd" ? "cjs" : "js"}`;
+      }
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
