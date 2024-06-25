@@ -10,7 +10,7 @@ import { SetHashParamOpts } from './util';
 /**
  * Hook for getting/setting a hash param boolean (safely encoded)
  */
-export const useHashparamBooleanUpdated = (
+export const useHashparamBoolean = (
   key: string,
   defaultValue?: boolean
 ): [
