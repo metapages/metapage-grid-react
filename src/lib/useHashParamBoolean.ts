@@ -22,7 +22,11 @@ export const useHashParamBoolean = (
 
   // if the hash string value changes
   useEffect(() => {
-    setHashBoolean(hashParamString === "true");
+    if (!!defaultValue) {
+      setHashBoolean(hashParamString === "false" ? false : true); 
+    } else {
+      setHashBoolean(hashParamString === "true" ? true : false);
+    }
   }, [defaultValue, key, hashParamString, setHashBoolean]);
 
   const setBoolean = useCallback(
