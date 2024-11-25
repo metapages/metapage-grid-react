@@ -4,7 +4,7 @@ import {
   getHashParamsFromWindow,
   setHashParamInWindow,
   SetHashParamOpts,
-} from "./util";
+} from "../core";
 
 /**
  * Hook for getting/setting hash params

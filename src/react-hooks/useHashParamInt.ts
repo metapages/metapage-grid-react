@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { useHashParam } from "./useHashParam";
-import { SetHashParamOpts } from "./util";
+import { SetHashParamOpts } from "../core";
 
 /**
- * Hook for getting/setting a hash param float (safely encoded)
+ * Hook for getting/setting a hash param int (safely encoded)
  */
-export const useHashParamFloat = (
+export const useHashParamInt = (
   key: string,
   defaultValue?: number
 ): [
   number | undefined,
-  (v: number | undefined, opts?: SetHashParamOpts) => void
+  (v: number | undefined) => void
 ] => {
   const [hashParamString, setHashParamString] = useHashParam(
     key,
@@ -18,16 +18,16 @@ export const useHashParamFloat = (
       ? defaultValue.toString()
       : undefined
   );
-  const [hashNumber, setHashNumber] = useState<number | undefined>(
-    hashParamString ? parseFloat(hashParamString) : undefined
+  const [hashInt, setHashInt] = useState<number | undefined>(
+    hashParamString ? parseInt(hashParamString) : undefined
   );
 
   // if the hash string value changes
   useEffect(() => {
-    setHashNumber(hashParamString ? parseFloat(hashParamString) : undefined);
-  }, [key, hashParamString, setHashNumber]);
+    setHashInt(hashParamString ? parseInt(hashParamString) : undefined);
+  }, [key, hashParamString, setHashInt]);
 
-  const setNumber = useCallback(
+  const setInt = useCallback(
     (val: number | undefined, opts?: SetHashParamOpts) => {
       if (val) {
         setHashParamString(val.toString(), opts);
@@ -38,5 +38,5 @@ export const useHashParamFloat = (
     [setHashParamString]
   );
 
-  return [hashNumber, setNumber];
+  return [hashInt, setInt];
 };

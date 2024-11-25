@@ -4,4 +4,4 @@ export * from "./useHashParamBoolean";
 export * from "./useHashParamFloat";
 export * from "./useHashParamInt";
 export * from "./useHashParamJson";
-export * from "./util";
+export * from "../core";

@@ -5,7 +5,7 @@ import {
 } from 'react';
 
 import { useHashParam } from './useHashParam';
-import { SetHashParamOpts } from './util';
+import { SetHashParamOpts, stringFromBase64String, stringToBase64String } from '../core';
 
 /**
  * Hook for getting/setting hash param string value, but base64 encoded
@@ -30,7 +30,7 @@ export const useHashParamBase64 = (
 
   // if the hash string value changes
   useEffect(() => {
-    setDecodedString(stringFromBase64String(hashParamString));
+    setDecodedString(hashParamString ? stringFromBase64String(hashParamString) : undefined);
   }, [key, hashParamString, setDecodedString]);
 
   const encodeAndSetStringParam = useCallback(
@@ -46,15 +46,4 @@ export const useHashParamBase64 = (
   );
 
   return [decodedString, encodeAndSetStringParam];
-};
-
-export const stringToBase64String = (value: string) => {
-  return btoa(encodeURIComponent(value));
-};
-
-export const stringFromBase64String = (value: string | undefined) => {
-  if (value && value.length > 0) {
-    return decodeURIComponent(atob(value));
-  }
-  return undefined;
 };

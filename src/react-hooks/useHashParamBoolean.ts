@@ -5,7 +5,7 @@ import {
 } from 'react';
 
 import { useHashParam } from './useHashParam';
-import { SetHashParamOpts } from './util';
+import { SetHashParamOpts } from '../core';
 
 /**
  * Hook for getting/setting a hash param boolean (safely encoded)

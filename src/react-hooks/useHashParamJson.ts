@@ -4,7 +4,7 @@ import {
   blobFromBase64String,
   blobToBase64String,
   SetHashParamOpts,
-} from "./util";
+} from "../core";
 
 /**
  * Hook for getting/setting a hash param JSON blob (safely encoded)
