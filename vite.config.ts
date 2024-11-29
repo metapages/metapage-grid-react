@@ -59,8 +59,11 @@ export default defineConfig(({ mode }) => ({
           preserveExtensions: true,
         }),
         typescript({
-          sourceMap: true,
+          tsconfig: './tsconfig.json',
           declaration: true,
+          declarationDir: './dist',
+          exclude: ['**/*.test.ts', '**/*.test.tsx'],
+          sourceMap: true,
           outDir: "dist",
         }),
       ],

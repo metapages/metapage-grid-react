@@ -1,11 +1,10 @@
 {
   "name": "@metapages/hash-query",
-  "version": "0.6.5",
+  "version": "0.7.5",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/metapages/hash-query.git"
   },
-  "type": "module",
   "keywords": [
     "hash",
     "query",
@@ -13,16 +12,33 @@
     "url-query",
     "hooks"
   ],
-  "main": "./dist/core/index.js",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/core/index.js",
+  "types": "./dist/core/index.d.ts",
   "exports": {
-    ".": "./dist/core/index.js",
-    "./react-hooks": "./dist/react-hooks/index.js"
+    ".": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.js",
+      "default": "./dist/core/index.js"
+    },
+    "./react-hooks": {
+      "types": "./dist/react-hooks/index.d.ts",
+      "import": "./dist/react-hooks/index.js",
+      "default": "./dist/react-hooks/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": ["./dist/core/index.d.ts"],
+      "react": ["./dist/react-hooks/index.d.ts"]
+    }
   },
   "files": [
     "dist",
     "src"
   ],
-  "browser": "./dist/core/index.js",
+  "browser": "./dist/index.js",
   "homepage": "https://github.com/metapages/hash-query/tree/main/docs#readme",
   "scripts": {
     "note": "echo 'use just. See README.md'"
