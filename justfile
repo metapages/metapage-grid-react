@@ -1,6 +1,4 @@
 ###########################################################################
-# Build the npm libraries: metapage, metaframe
-###########################################################################
 # just configuration
 ###########################################################################
 set shell          := ["bash", "-c"]
@@ -21,8 +19,13 @@ blue               := "\\e[34m"
 magenta            := "\\e[35m"
 grey               := "\\e[90m"
 
-_help:
-    @just --list --unsorted --list-heading $'Commands:\n'
+@_help:
+    just --list --unsorted --list-heading $'Commands:\n'
+    echo -e ""
+    echo -e "    Github  URL 🔗 {{green}}$(cat package.json | jq -r '.repository.url'){{normal}}"
+    echo -e "    Publish URL 🔗 {{green}}https://$(cat package.json | jq -r '.homepage'){{normal}}"
+    echo -e "    npm     URL 🔗 {{green}}https://www.npmjs.com/package/$(cat package.json | jq -r '.name'){{normal}}"
+    echo -e ""
 
 # Build the production npm distributions in dist/metaframe and dist/metapage
 build: _build
@@ -65,16 +68,6 @@ dev: _ensure_node_modules watch
 @check: (_tsc "--build")
     echo -e "✅ {{green}}TypeScript{{normal}} check passed"
 
-# npm link the package in dist for local development. In the other project: 'npm link @metapages/metapage'
-@link:
-    if [ ! -d dist ]; then just build; fi
-    cd dist && npm link
-    echo -e "👉 in the other project: npm link {{NPM_MODULE}}"
-
-# unlink the package in dist from local development. You probably don't ever need to do this
-@unlink:
-    cd dist && npm unlink
-
 # List all published versions
 @list:
     npm view {{NPM_MODULE}} versions --json
@@ -114,7 +107,6 @@ module_deprecate version +message:
 clean:
     @mkdir -p dist
     rm -rf dist/*
-    just test/clean
 
 @_require_NPM_TOKEN:
     if [ -z "$NPM_TOKEN" ]; then echo "Missing NPM_TOKEN"; exit 1; fi

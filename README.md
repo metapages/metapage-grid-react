@@ -1,118 +1,58 @@
 
-# @metapages/hash-query
+# @metapages/metapage-grid-react
 
-Get/set URL parameters in the hash string instead of the query string.
+Embed metapages as grids directly in your react apps.
 
-- Includes react hooks for getting/setting typed values.
-- Includes low level tools for getting/setting arbitrary typed values.
-  - Includes base64 encoding/decoding of JSON objects, booleans, numbers, etc.
-
-## Usage
+## Installation
 
 Install the package:
 ```sh
-npm i @metapages/hash-query
+npm i @metapages/metapage-grid-react
 ```
 
-Use the hook in your component:
+## React Components
 
-```typescript
-import { useHashParamJson } from "@metapages/hash-query";
+You can directly embed a metapage definition in your react app, and
+- pass in inputs
+- listen to outputs
+- listen to definition changes
+- customize the component metaframe wrappers
 
-...
-
-const [jsonBlob, setJsonBlob] = useHashParamJson<Thing>("key", defaultValue);
-```
-
-
-Use the low level tools for getting/setting arbitrary typed values:
-
-```typescript
-import {
-  getHashParamValueJsonFromWindow,
-  setHashParamValueJsonInWindow,
-} from "@metapages/hash-query";
-
-const jsonBlob = getHashParamValueJsonFromWindow<Thing>("key");
-setHashParamValueJsonInWindow("key", jsonBlob);
-```
-
-## How it works
-
-
-The hash part of the URL (everything after `#`) is split into the `<hash value>` part and the `key=val` query parts of the hash parameter:
-
-```
-https://<origin><path><?querystring>#<hash value>?hashkey1=hashvaue1&hashkey2=hashvaue2...
-```
-
-
-## Examples
-
-### Other types:
 
 ```typescript
 
-import {
-useHashParam,
-useHashParamBase64,
-useHashParamBoolean,
-useHashParamFloat,
-useHashParamInt,
-useHashParamJson,
-} from "@metapages/hash-query";
+import { MetapageGridLayoutFromDefinition } from '@metapages/metapage-grid-react';
+import { getMetapageDefinitionFromUrl } from '@metapages/metapage';
 
-```
+export const MyMetapageDisplay: React.FC = () => {
 
-Usage is the same as the JSON example above (get/set value)
+  const [metapageDefinition, setMetapageDefinition] = useState<MetapageDefinitionV1 | undefined>(undefined);
 
-## API and utils for direct manipulation
+  useEffect(() => {
+    (async () => {
+      const definition = await getMetapageDefinitionFromUrl("https://app.metapage.io/dion/example-hello-world-b4dc42b55df94364a1ebac10e8e91f32")
+      setMetapageDefinition(definition);
+    )());;
+  }, []);
 
-Low level tools and utils for getting/setting arbitrary typed values in the URL hash string or manipulating the hash string without having to actually set the URL:
+  if (!metapageDefinition) {
+    return <div>Loading...</div>;
+  }
 
-
-## Exported functions
-
-```sh
-# Base Functions
-blobToBase64String
-blobFromBase64String
-stringToBase64String
-stringFromBase64String
-getUrlHashParams
-getUrlHashParamsFromHashString
-getHashParamValue
-getHashParamFromWindow
-getHashParamsFromWindow
-setHashParamInWindow
-setHashParamValueInHashString
-setHashParamValueInUrl
-deleteHashParamFromWindow
-deleteHashParamFromUrl
-# JSON Functions
-setHashParamValueJsonInUrl
-getHashParamValueJsonFromUrl
-setHashParamValueJsonInWindow
-getHashParamValueJsonFromWindow
-setHashParamValueJsonInHashString
-# Float Functions
-setHashParamValueFloatInUrl
-getHashParamValueFloatFromUrl
-setHashParamValueFloatInWindow
-getHashParamValueFloatFromWindow
-# Integer Functions
-setHashParamValueIntInUrl
-getHashParamValueIntFromUrl
-setHashParamValueIntInWindow
-getHashParamValueIntFromWindow
-# Boolean Functions
-setHashParamValueBooleanInUrl
-getHashParamValueBooleanFromUrl
-setHashParamValueBooleanInWindow
-getHashParamValueBooleanFromWindow
-# Base64 Functions
-setHashParamValueBase64EncodedInUrl
-getHashParamValueBase64DecodedFromUrl
-setHashParamValueBase64EncodedInWindow
-getHashParamValueBase64DecodedFromWindow
+  return (
+    <MetapageGridLayoutFromDefinition
+      definition={metapageDefinition}
+      // definition?: MetapageDefinitionV1;
+      // inputs?: MetapageInstanceInputs;
+      // onOutputs?: (outputs: MetapageInstanceInputs) => void;
+      // onDefinition?: (e: MetapageDefinitionV1) => void;
+      // onMetapage?: (m: Metapage) => void;
+      // Wrapper?: ComponentType<any>;
+      // onMetapageError?: (e: any) => void;
+      // ErrorWrapper?: ComponentType<any>;
+      // debug?: boolean;
+      // disableEditing?: boolean;
+    />
+  )
+}
 ```

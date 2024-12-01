@@ -1,37 +1,41 @@
 {
-  "name": "@metapages/hash-query",
-  "version": "0.7.5",
+  "name": "@metapages/metapage-grid-react",
+  "version": "0.2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/metapages/hash-query.git"
+    "url": "git+https://github.com/metapages/metapage-grid-react.git"
   },
   "keywords": [
-    "hash",
-    "query",
-    "url",
-    "url-query",
-    "hooks"
+    "metapage",
+    "react",
+    "grid-react",
+    "metaframe",
+    "embed"
   ],
   "type": "module",
   "main": "./dist/index.js",
-  "module": "./dist/core/index.js",
-  "types": "./dist/core/index.d.ts",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/core/index.d.ts",
-      "import": "./dist/core/index.js",
-      "default": "./dist/core/index.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     },
-    "./react-hooks": {
-      "types": "./dist/react-hooks/index.d.ts",
-      "import": "./dist/react-hooks/index.js",
-      "default": "./dist/react-hooks/index.js"
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js",
+      "default": "./dist/components/index.js"
     }
   },
   "typesVersions": {
     "*": {
-      "*": ["./dist/core/index.d.ts"],
-      "react": ["./dist/react-hooks/index.d.ts"]
+      "*": [
+        "./dist/index.d.ts"
+      ],
+      "components": [
+        "./dist/components/index.d.ts"
+      ]
     }
   },
   "files": [
@@ -39,18 +43,26 @@
     "src"
   ],
   "browser": "./dist/index.js",
-  "homepage": "https://github.com/metapages/hash-query/tree/main/docs#readme",
+  "homepage": "https://github.com/metapages/metapage-grid-react/tree/main/docs#readme",
   "scripts": {
     "note": "echo 'use just. See README.md'"
   },
+  "dependencies": {
+    "object-hash": "^3.0.0",
+    "react-grid-layout": "^1.5.0"
+  },
   "peerDependencies": {
-    "react": ">=18.0"
+    "@metapages/metapage-react": "0.x",
+    "@metapages/metapage": "1.x",
+    "react": "18.x"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^12.1.1",
     "@types/node": "^20.17.7",
+    "@types/object-hash": "^3.0.6",
     "@types/react": "^18.3.12",
-    "react": "^18.3.12",
+    "@types/react-grid-layout": "^1.3.5",
+    "react": "^18.3.1",
     "rollup-plugin-typescript-paths": "^1.5.0",
     "tslib": "^2.8.1",
     "typescript": "^5.7.2",
@@ -69,8 +81,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "dependencies": {
-    "fast-json-stable-stringify": "^2.1.0"
   }
 }

@@ -28,8 +28,8 @@ export default defineConfig(({ mode }) => ({
     reportCompressedSize: true,
     lib: {
       entry: {
-        'core/index': path.resolve(__dirname, 'src/core/index.ts'),
-        'react-hooks/index': path.resolve(__dirname, 'src/react-hooks/index.ts')
+        'index': path.resolve(__dirname, 'src/index.ts'),
+        'components/index': path.resolve(__dirname, 'src/components/index.tsx')
       },
       formats: ['es']
 
@@ -53,7 +53,7 @@ export default defineConfig(({ mode }) => ({
       },
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ["react"],
+      external: ["react", "@metapages/metapage", "@metapages/metapage-react"],
       plugins: [
         typescriptPaths({
           preserveExtensions: true,
